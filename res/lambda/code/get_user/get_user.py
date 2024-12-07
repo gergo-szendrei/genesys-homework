@@ -13,19 +13,19 @@ def lambda_handler(event, context):
 
     try:
         path_parameters = validate_request_delete_user(event)
-        dynamo_result_uuid = get_user_by_uuid(dynamodb, path_parameters["uuid"])
-        validate_exist_present_user(dynamo_result_uuid)
+        dynamo_result_by_uuid = get_user_by_uuid(dynamodb, path_parameters["uuid"])
+        validate_exist_present_user(dynamo_result_by_uuid)
 
         return {
             "statusCode": 200,
             "body": json.dumps(
                 {
                     "uuid": path_parameters["uuid"],
-                    "full_name": dynamo_result_uuid["Items"][0]["full_name"]["S"],
-                    "email_address": dynamo_result_uuid["Items"][0]["email_address"][
+                    "full_name": dynamo_result_by_uuid["Items"][0]["full_name"]["S"],
+                    "email_address": dynamo_result_by_uuid["Items"][0]["email_address"][
                         "S"
                     ],
-                    "last_login": dynamo_result_uuid["Items"][0]["last_login"]["S"],
+                    "last_login": dynamo_result_by_uuid["Items"][0]["last_login"]["S"],
                 }
             ),
         }

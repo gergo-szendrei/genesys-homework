@@ -3,8 +3,14 @@ import json
 
 from request_validator import *
 from dynamo_helper import *
+from exist_validator import *
 
 dynamodb = boto3.client("dynamodb")
+
+# --- DEVELOPMENT POINT - BODY vs PARAM ---
+# For this list logic, query params are also viable option
+# In a production project I would most likely go with query params, but for this assignment I chose request body
+# approach as it is already implemented
 
 
 def lambda_handler(event, context):

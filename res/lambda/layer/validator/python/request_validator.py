@@ -37,6 +37,12 @@ def validate_request_list_users(event) -> dict:
     return body
 
 
+def validate_request_login_user(event) -> dict:
+    body = validate_request_common_body(event)
+    validate_dict_login_user(body)
+    return body
+
+
 def validate_request_common_body(event) -> dict:
     if "body" not in event:
         raise RequestValidationException("Body is mandatory!")

@@ -77,6 +77,22 @@ def update_user(
     )
 
 
+def update_last_login(
+    dynamodb,
+    uuid_value: str,
+    last_login: str,
+) -> None:
+    dynamodb.update_item(
+        ExpressionAttributeValues={
+            ":last_login": {"S": last_login},
+        },
+        Key={"uuid": {"S": uuid_value}},
+        ReturnValues="ALL_NEW",
+        TableName=os.environ["DYNAMO_DB_USER_TABLE"],
+        UpdateExpression="SET last_login = :last_login",
+    )
+
+
 def delete_user(dynamodb, uuid_value: str) -> None:
     dynamodb.delete_item(
         Key={"uuid": {"S": uuid_value}}, TableName=os.environ["DYNAMO_DB_USER_TABLE"]

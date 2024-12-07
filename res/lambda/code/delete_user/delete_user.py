@@ -13,8 +13,8 @@ def lambda_handler(event, context):
 
     try:
         path_parameters = validate_request_delete_user(event)
-        dynamo_result_uuid = get_user_by_uuid(dynamodb, path_parameters["uuid"])
-        validate_exist_present_user(dynamo_result_uuid)
+        dynamo_result_by_uuid = get_user_by_uuid(dynamodb, path_parameters["uuid"])
+        validate_exist_present_user(dynamo_result_by_uuid)
 
         delete_user(dynamodb, path_parameters["uuid"])
 

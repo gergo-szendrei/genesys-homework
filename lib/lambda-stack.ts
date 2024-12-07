@@ -118,6 +118,18 @@ export class LambdaStack extends cdk.Stack {
         commonPolicy
       ];
     }
+    if (lambdaFunctionType === 'login_user') {
+      return [
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-gsi',
+          ['dynamodb:Query'],
+          ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE + '/index/'
+          + app.DYNAMO_DB_USER_TABLE_EMAIL_ADDRESS_GSI_NAME]),
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-table',
+          ['dynamodb:UpdateItem'],
+          ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE]),
+        commonPolicy
+      ];
+    }
     throw new Error('Not Implemented!');
   }
 

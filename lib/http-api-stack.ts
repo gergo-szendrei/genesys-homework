@@ -67,6 +67,9 @@ export class HttpApiStack extends cdk.Stack {
     if (lambdaFunctionType === 'list_users') {
       return apigatewayv2.HttpRouteKey.with(API_USER + '/list', apigatewayv2.HttpMethod.POST)
     }
+    if (lambdaFunctionType === 'login_user') {
+      return apigatewayv2.HttpRouteKey.with(API_USER + '/login', apigatewayv2.HttpMethod.POST)
+    }
     throw new Error('Not Implemented!');
   }
 

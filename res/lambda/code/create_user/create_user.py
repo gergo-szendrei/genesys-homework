@@ -15,10 +15,10 @@ def lambda_handler(event, context):
 
     try:
         body = validate_request_create_user(event)
-        dynamo_result_email_address = get_user_by_email_address(
+        dynamo_result_by_email_address = get_user_by_email_address(
             dynamodb, body["email_address"]
         )
-        validate_exist_unique_email_address(dynamo_result_email_address)
+        validate_exist_unique_email_address(dynamo_result_by_email_address)
 
         uuid_value = str(uuid.uuid4())
         hash_salt, hashed_password = hash_value(body["password"])

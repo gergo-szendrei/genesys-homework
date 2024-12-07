@@ -10,7 +10,7 @@ def hash_value(value) -> tuple:
     return hash_salt, hashed_value
 
 
-def is_matching(value, hash_salt, check_hashed_value) -> bool:
+def is_matching_hash(value, hash_salt, check_hashed_value) -> bool:
     encoded_value = value.encode("utf-8")
     encoded_salt = hash_salt.encode("utf-8")
     hashed_value = hashlib.sha512(encoded_value + encoded_salt).hexdigest()
