@@ -19,6 +19,20 @@ def get_user_by_uuid(dynamodb, uuid: str):
     )
 
 
+def list_users(dynamodb, uuid: str, limit: int):
+    if uuid is None:
+        return dynamodb.scan(
+            Limit=limit,
+            TableName=os.environ["DYNAMO_DB_USER_TABLE"],
+        )
+
+    return dynamodb.scan(
+        ExclusiveStartKey={"uuid": {"S": uuid}},
+        Limit=limit,
+        TableName=os.environ["DYNAMO_DB_USER_TABLE"],
+    )
+
+
 def save_user(
     dynamodb,
     uuid_value: str,

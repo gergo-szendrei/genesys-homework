@@ -32,7 +32,8 @@ export const LAMBDA_FUNCTION_TYPES: string[] = [
   'create_user',
   'update_user',
   'delete_user',
-  'get_user'
+  'get_user',
+  'list_users'
 ];
 export type LambdaFunctionType = typeof LAMBDA_FUNCTION_TYPES[number];
 

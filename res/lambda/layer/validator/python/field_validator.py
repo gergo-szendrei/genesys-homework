@@ -3,13 +3,13 @@ from simple_validator import *
 
 class FieldValidationException(Exception):
     def __init__(self, message, field):
-        super().__init__(message)
+        super().__init__("Field validation failed! " + message)
         self.field = field
 
 
-def validate_field_full_name(value) -> None:
+def validate_field_full_name(value: str) -> None:
     field = "full_name"
-    prefix = "Field validation failed! Full name "
+    prefix = "Full name "
     if not is_provided(value):
         raise FieldValidationException(prefix + "is mandatory!", field)
     if not is_min_length(value, 3):
@@ -20,9 +20,9 @@ def validate_field_full_name(value) -> None:
         raise FieldValidationException(prefix + "is invalid!", field)
 
 
-def validate_field_email_address(value) -> None:
+def validate_field_email_address(value: str) -> None:
     field = "email_address"
-    prefix = "Field validation failed! Email address "
+    prefix = "Email address "
     if not is_provided(value):
         raise FieldValidationException(prefix + "is mandatory!", field)
     if not is_min_length(value, 6):
@@ -33,9 +33,9 @@ def validate_field_email_address(value) -> None:
         raise FieldValidationException(prefix + "is invalid!", field)
 
 
-def validate_field_password(value) -> None:
+def validate_field_password(value: str) -> None:
     field = "password"
-    prefix = "Field validation failed! Password "
+    prefix = "Password "
     if not is_provided(value):
         raise FieldValidationException(prefix + "is mandatory!", field)
     if not is_min_length(value, 12):
@@ -54,8 +54,13 @@ def validate_field_password(value) -> None:
 
 def validate_field_uuid(value: str) -> None:
     field = "uuid"
-    prefix = "Field validation failed! UUID "
+    prefix = "UUID "
     if not is_provided(value):
         raise FieldValidationException(prefix + "is mandatory!", field)
     if not is_uuid(value):
         raise FieldValidationException(prefix + "is invalid!", field)
+
+
+def validate_field_limit(value: int) -> None:
+    if not is_min_value(value, 1):
+        raise FieldValidationException("Limit is too small!", "limit")

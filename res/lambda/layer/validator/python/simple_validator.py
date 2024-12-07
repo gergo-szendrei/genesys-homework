@@ -35,6 +35,10 @@ def is_uuid(value: str) -> bool:
         return False
 
 
+def is_min_value(value: int, min_value: int) -> bool:
+    return value >= min_value
+
+
 def has_character(value: str, character: Character) -> bool:
     return len(get_matching_characters(value, character)) > 0
 

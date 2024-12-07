@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     try:
         body = validate_request_update_user(event)
         dynamo_result_uuid = get_user_by_uuid(dynamodb, body["uuid"])
-        validate_present_user(dynamo_result_uuid)
+        validate_exist_present_user(dynamo_result_uuid)
 
         if (
             dynamo_result_uuid["Items"][0]["email_address"]["S"]
@@ -24,7 +24,7 @@ def lambda_handler(event, context):
             dynamo_result_email_address = get_user_by_email_address(
                 dynamodb, body["email_address"]
             )
-            validate_unique_email_address(dynamo_result_email_address)
+            validate_exist_unique_email_address(dynamo_result_email_address)
 
         hash_salt, hashed_password = hash_value(body["password"])
         update_user(
