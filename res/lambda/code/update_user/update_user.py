@@ -49,7 +49,7 @@ def lambda_handler(event, context):
         }
     except (
         FieldValidationException,
-        BodyValidationException,
+        DictValidationException,
         RequestValidationException,
         ExistValidationException,
     ) as e:

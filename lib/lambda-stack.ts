@@ -94,6 +94,14 @@ export class LambdaStack extends cdk.Stack {
         commonPolicy
       ];
     }
+    if (lambdaFunctionType === 'delete_user') {
+      return [
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-table',
+          ['dynamodb:Query', 'dynamodb:DeleteItem'],
+          ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE]),
+        commonPolicy
+      ];
+    }
     throw new Error('Not Implemented!');
   }
 

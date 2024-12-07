@@ -61,3 +61,9 @@ def update_user(
         UpdateExpression="SET full_name = :full_name, email_address = :email_address, "
         + "password = :password, salt = :salt",
     )
+
+
+def delete_user(dynamodb, uuid_value: str) -> None:
+    dynamodb.delete_item(
+        Key={"uuid": {"S": uuid_value}}, TableName=os.environ["DYNAMO_DB_USER_TABLE"]
+    )

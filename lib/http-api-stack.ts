@@ -8,7 +8,7 @@ import * as apigatewayv2a from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 
 // API
 const API_PREFIX = "/api";
-const API_USER_PREFIX = API_PREFIX + "/user";
+const API_USER = API_PREFIX + "/user";
 
 export class HttpApiStack extends cdk.Stack {
   constructor(scope: Construct, id: string, lambdaFunctionWrappers: app.LambdaFunctionWrapper[],
@@ -53,10 +53,13 @@ export class HttpApiStack extends cdk.Stack {
 
   private createRouteKey(lambdaFunctionType: app.LambdaFunctionType): apigatewayv2.HttpRouteKey {
     if (lambdaFunctionType === 'create_user') {
-      return apigatewayv2.HttpRouteKey.with(API_USER_PREFIX + '/create', apigatewayv2.HttpMethod.POST)
+      return apigatewayv2.HttpRouteKey.with(API_USER, apigatewayv2.HttpMethod.POST)
     }
     if (lambdaFunctionType === 'update_user') {
-      return apigatewayv2.HttpRouteKey.with(API_USER_PREFIX + '/update', apigatewayv2.HttpMethod.PUT)
+      return apigatewayv2.HttpRouteKey.with(API_USER, apigatewayv2.HttpMethod.PUT)
+    }
+    if (lambdaFunctionType === 'delete_user') {
+      return apigatewayv2.HttpRouteKey.with(API_USER + '/{uuid}', apigatewayv2.HttpMethod.DELETE)
     }
     throw new Error('Not Implemented!');
   }
