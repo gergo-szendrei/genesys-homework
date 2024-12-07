@@ -31,7 +31,8 @@ export const DYNAMO_DB_USER_TABLE_EMAIL_ADDRESS_GSI_NAME = 'email_address_index'
 export const LAMBDA_FUNCTION_TYPES: string[] = [
   'create_user',
   'update_user',
-  'delete_user'
+  'delete_user',
+  'get_user'
 ];
 export type LambdaFunctionType = typeof LAMBDA_FUNCTION_TYPES[number];
 

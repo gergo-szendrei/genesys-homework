@@ -34,7 +34,7 @@ def validate_body_update_user(body: dict) -> None:
     validate_field_uuid(body["uuid"])
 
 
-def validate_path_parameters_delete_user(path_parameters: dict) -> None:
+def validate_path_parameters_common_uuid(path_parameters: dict):
     if "uuid" not in path_parameters:
         raise DictValidationException(
             "Dict validation failed! UUID is mandatory!", "uuid"

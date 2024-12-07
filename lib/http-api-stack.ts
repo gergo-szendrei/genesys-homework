@@ -61,6 +61,9 @@ export class HttpApiStack extends cdk.Stack {
     if (lambdaFunctionType === 'delete_user') {
       return apigatewayv2.HttpRouteKey.with(API_USER + '/{uuid}', apigatewayv2.HttpMethod.DELETE)
     }
+    if (lambdaFunctionType === 'get_user') {
+      return apigatewayv2.HttpRouteKey.with(API_USER + '/{uuid}', apigatewayv2.HttpMethod.GET)
+    }
     throw new Error('Not Implemented!');
   }
 
