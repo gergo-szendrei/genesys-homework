@@ -39,3 +39,7 @@
   * Normally I would definitely go with OpenAPI 3.0 design, and import the HTTP API from that
   * The reason to not follow this approach is that the infra is not scope of this assignment, therefore I went with 
   the faster approach, as I already had this approach developed and ready to use
+
+* Why using HTTP API instead of REST API?
+  * Unlike REST API, HTTP API supports JWT Authorizer which is the easiest option with Cognito, 
+    also provides smaller cost for API calls

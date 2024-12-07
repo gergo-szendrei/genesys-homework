@@ -8,9 +8,19 @@ class RequestValidationException(Exception):
 
 
 def validate_request_create_user(event) -> dict:
+    body = validate_request_common(event)
+    validate_body_create_user(body)
+    return body
+
+
+def validate_request_update_user(event) -> dict:
+    body = validate_request_common(event)
+    validate_body_update_user(body)
+    return body
+
+
+def validate_request_common(event) -> dict:
     prefix = "Request validation failed! "
     if "body" not in event:
         raise RequestValidationException(prefix + "Body is mandatory!")
-    body = json.loads(event["body"])
-    validate_body_create_user(body)
-    return body
+    return json.loads(event["body"])

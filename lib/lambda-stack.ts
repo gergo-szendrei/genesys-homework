@@ -72,12 +72,24 @@ export class LambdaStack extends cdk.Stack {
       'service-role/AWSLambdaBasicExecutionRole');
     if (lambdaFunctionType === 'create_user') {
       return [
-        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-query',
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-gsi',
           ['dynamodb:Query'],
           ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE + '/index/'
           + app.DYNAMO_DB_USER_TABLE_EMAIL_ADDRESS_GSI_NAME]),
-        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-put-item',
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-table',
           ['dynamodb:PutItem'],
+          ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE]),
+        commonPolicy
+      ];
+    }
+    if (lambdaFunctionType === 'update_user') {
+      return [
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-gsi',
+          ['dynamodb:Query'],
+          ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE + '/index/'
+          + app.DYNAMO_DB_USER_TABLE_EMAIL_ADDRESS_GSI_NAME]),
+        this.createLambdaPolicy(app.RESOURCE_PREFIX + lambdaFunctionType + '-lambda-custom-policy-table',
+          ['dynamodb:Query', 'dynamodb:UpdateItem'],
           ['arn:aws:dynamodb:' + app.REGION + ':' + app.ACCOUNT + ':table/' + app.DYNAMO_DB_USER_TABLE]),
         commonPolicy
       ];

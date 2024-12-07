@@ -21,3 +21,13 @@ def validate_body_create_user(body: dict) -> None:
     validate_field_full_name(body["full_name"])
     validate_field_email_address(body["email_address"])
     validate_field_password(body["password"])
+
+
+def validate_body_update_user(body: dict) -> None:
+    validate_body_create_user(body)
+
+    prefix = "Body validation failed! "
+    if "uuid" not in body:
+        raise BodyValidationException(prefix + "UUID is mandatory!", "uuid")
+
+    validate_field_uuid(body["uuid"])

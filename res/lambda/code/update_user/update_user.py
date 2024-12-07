@@ -1,6 +1,5 @@
 import boto3
 import json
-import uuid
 
 from request_validator import *
 from dynamo_helper import *
@@ -14,17 +13,23 @@ def lambda_handler(event, context):
     print(context)
 
     try:
-        body = validate_request_create_user(event)
-        dynamo_result_email_address = get_user_by_email_address(
-            dynamodb, body["email_address"]
-        )
-        validate_unique_email_address(dynamo_result_email_address)
+        body = validate_request_update_user(event)
+        dynamo_result_uuid = get_user_by_uuid(dynamodb, body["uuid"])
+        validate_present_user(dynamo_result_uuid)
 
-        uuid_value = str(uuid.uuid4())
+        if (
+            dynamo_result_uuid["Items"][0]["email_address"]["S"]
+            != body["email_address"]
+        ):
+            dynamo_result_email_address = get_user_by_email_address(
+                dynamodb, body["email_address"]
+            )
+            validate_unique_email_address(dynamo_result_email_address)
+
         hash_salt, hashed_password = hash_value(body["password"])
-        save_user(
+        update_user(
             dynamodb,
-            uuid_value,
+            body["uuid"],
             body["full_name"],
             body["email_address"],
             hash_salt,
@@ -32,13 +37,13 @@ def lambda_handler(event, context):
         )
 
         return {
-            "statusCode": 201,
+            "statusCode": 200,
             "body": json.dumps(
                 {
-                    "uuid": uuid_value,
+                    "uuid": body["uuid"],
                     "full_name": body["full_name"],
                     "email_address": body["email_address"],
-                    "last_login": "",
+                    "last_login": dynamo_result_uuid["Items"][0]["last_login"]["S"],
                 }
             ),
         }
