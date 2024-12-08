@@ -19,11 +19,10 @@ def lambda_handler(event, context):
             dynamodb, body["email_address"]
         )
 
-        hash_salt = dynamo_result_by_email_address["Items"][0]["salt"]["S"]
-        check_hashed_value = dynamo_result_by_email_address["Items"][0]["password"]["S"]
-
         if dynamo_result_by_email_address["Count"] == 0 or not is_matching_hash(
-            body["password"], hash_salt, check_hashed_value
+            body["password"],
+            dynamo_result_by_email_address["Items"][0]["salt"]["S"],
+            dynamo_result_by_email_address["Items"][0]["password"]["S"],
         ):
             return {
                 "statusCode": 401,

@@ -40,9 +40,9 @@
   * The reason to not follow this approach is that the infra is not scope of this assignment, therefore I went with 
   the faster approach, as I already had this approach developed and ready to use
 
-* Why using HTTP API instead of REST API?
+* Why using **HTTP API** instead of REST API?
   * Unlike REST API, HTTP API supports JWT Authorizer which is the easiest option with Cognito, 
     also provides smaller cost for API calls
 
-* Why not using bcrypt for hashing?
+* Why not using **bcrypt** for hashing?
   * I had only a MAC and a Windows PC available for building the package, but AWS requires Linux built package to run.
