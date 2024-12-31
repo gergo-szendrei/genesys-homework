@@ -14,6 +14,21 @@
 * Run `cdk destroy` when it is not needed anymore
   * **For example**: `cdk destroy '**' --profile MainAdmin`
 
+## Testing
+For testing I see both the following ways applicable:
+* Unit testing and mocking AWS Resources
+* Integration test on "real" test resources
+
+As the main points that need to be tested are the same I chose the first one.
+I did not go into code implementation, but provided all the scenarios I would test for.
+Steps I would take:
+* To test the business functionality, I would use standard unit testing approach / framework 
+* To mock the AWS Resources, I would use Moto Library (https://pypi.org/project/moto/)
+  * Init environ variables and DynamoDB resources in **setUp**
+  * Reset these in **tearDown**
+  * Add the test cases as **def** blocks
+    * The list of these cases are listed in "..._test" files near .py files
+
 ## Questions
 * Why is this a **TS** project, while the assignment states the logic should be written in Python?
   * The assignment requires only the backend logic, no logging, deployment, security, etc. is needed
